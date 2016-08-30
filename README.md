@@ -1,2 +1,2 @@
 # lasingla
-Personal finance application.
+Universal React App Boilerplate.
