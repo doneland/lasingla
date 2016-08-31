@@ -28,8 +28,11 @@ const app = Express();
 // Run Webpack dev server in development mode.
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
-  app.use(webpackDevMiddleware(compiler, {noInfo: true, publicPath: config.output.publicPath}));
-  app.use(webpackHotMiddleware(compiler)); 
+  app.use(webpackDevMiddleware(compiler, {
+    noInfo: true,
+    publicPath: config.output.publicPath
+  }));
+  app.use(webpackHotMiddleware(compiler));
 }
 
 
@@ -45,6 +48,11 @@ app.use(Express.static(path.resolve(__dirname, '../dist')));
 
 // Render initial HTML.
 const renderFullPage = (html, initialState) => {
+
+  // Import Manifests for production app only.
+  const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets);
+  const assetsChunkManifest = process.env.webpackChunkAssets && JSON.parse(process.env.webpackChunkAssets);
+
   return `
     <!doctype html>
     <html>
@@ -54,7 +62,10 @@ const renderFullPage = (html, initialState) => {
         <div id="root">${html}</div>
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
+          window.webpackManifest = ''
         </script>
+        <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['/vendor.js'] : '/vendor.js'}'></script>
+        <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['/app.js'] : '/app.js'}'></script>
       </body>
     </html>
   `;

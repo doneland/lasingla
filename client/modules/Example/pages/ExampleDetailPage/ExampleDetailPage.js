@@ -6,7 +6,7 @@ class ExampleListPage extends React.Component {
   render() {
     return (
       <div>
-        <h1>Example Detail Page</h1>
+        <h1>Example Detail</h1>
       </div>
     )
   }

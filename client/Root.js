@@ -21,6 +21,6 @@ export default function Root(props) {
   );
 }
 
-App.propTypes = {
+Root.propTypes = {
   store: React.PropTypes.object.isRequired,
 };
