@@ -3,6 +3,8 @@ var cssnext = require('postcss-cssnext');
 var postcssFocus = require('postcss-focus');
 var postcssReporter = require('postcss-reporter');
 
+console.log('Public path:', __dirname);
+
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
 
@@ -23,7 +25,8 @@ module.exports = {
   output: {
     path: __dirname,
     filename: 'app.js',
-    publicPath: 'http://0.0.0.0:8000/',
+    publicPath: '/'
+    //publicPath: '/'
   },
 
   resolve: {
@@ -81,5 +84,5 @@ module.exports = {
     postcssReporter({
       clearMessages: true,
     }),
-  ],
+  ]
 };

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import styles from './App.css';
 
 // Import Components
+import Helmet from 'react-helmet';
 import DevTools from './components/DevTools';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -22,9 +23,24 @@ export class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
         <div>
+        <Helmet
+          title="Lasingla"
+          titleTemplate="%s - Lasingla Template"
+          meta={[
+            { charset: 'utf-8' },
+            {
+              'http-equiv': 'X-UA-Compatible',
+              content: 'IE=edge',
+            },
+            {
+              name: 'viewport',
+              content: 'width=device-width, initial-scale=1',
+            },
+          ]}
+        />
           <Header />
           <div>
             {this.props.children}

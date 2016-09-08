@@ -14,7 +14,7 @@ import routes from './routes';
 export default function Root(props) {
   return (
     <Provider store={props.store}>
-      <Router history={browserHistory}>
+      <Router history={browserHistory} {...props.renderProps}>
         {routes}
       </Router>
     </Provider>
@@ -23,4 +23,5 @@ export default function Root(props) {
 
 Root.propTypes = {
   store: React.PropTypes.object.isRequired,
+  renderProps: React.PropTypes.object.isRequired
 };

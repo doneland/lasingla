@@ -2,9 +2,11 @@ import Express from 'express';
 import compression from 'compression';
 import bodyParser from 'body-parser';
 import path from 'path';
+import cors from 'cors';
 
 // Dependencies required by React
 import {Provider} from 'react-redux';
+import Helmet from 'react-helmet';
 import React from 'react';
 import {renderToString} from 'react-dom/server';
 import {match, RouterContext} from 'react-router';
@@ -29,14 +31,15 @@ const app = Express();
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
   app.use(webpackDevMiddleware(compiler, {
-    noInfo: true,
-    publicPath: config.output.publicPath
+    publicPath: config.output.publicPath,
+    noInfo: true
   }));
   app.use(webpackHotMiddleware(compiler));
 }
 
 
 // Apply body Parser and server public assets and routes.
+app.use(cors());
 app.use(compression());
 app.use(bodyParser.json({limit: '20mb'}));
 app.use(bodyParser.urlencoded({limit: '20mb', extended: false}));
@@ -48,6 +51,7 @@ app.use(Express.static(path.resolve(__dirname, '../dist')));
 
 // Render initial HTML.
 const renderFullPage = (html, initialState) => {
+  const head = Helmet.rewind();
 
   // Import Manifests for production app only.
   const assetsManifest = process.env.webpackAssets && JSON.parse(process.env.webpackAssets);
@@ -57,12 +61,22 @@ const renderFullPage = (html, initialState) => {
     <!doctype html>
     <html>
       <head>
+        ${head.base.toString()}
+        ${head.title.toString()}
+        ${head.meta.toString()}
+        ${head.link.toString()}
+        ${head.script.toString()}
+
+        ${process.env.NODE_ENV === 'production' ? `<link rel='stylesheet' href='${assetsManifest['/app.css']}' />` : ''}
       </head>
       <body>
         <div id="root">${html}</div>
         <script>
           window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
-          window.webpackManifest = ''
+          ${process.env.NODE_ENV === 'production' ?
+          `//<![CDATA[
+          window.webpackManifest = ${JSON.stringify(chunkManifest)};
+          //]]>` : ''}
         </script>
         <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['/vendor.js'] : '/vendor.js'}'></script>
         <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['/app.js'] : '/app.js'}'></script>
@@ -117,6 +131,14 @@ app.use((req, res, next) => {
         next(err);
       })
   });
+});
+
+
+// Start server.
+// TODO: Create configuration file and provide info from it.
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, function () {
+  console.log('Server listening on', PORT);
 });
 
 
