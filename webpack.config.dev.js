@@ -3,15 +3,13 @@ var cssnext = require('postcss-cssnext');
 var postcssFocus = require('postcss-focus');
 var postcssReporter = require('postcss-reporter');
 
-console.log('Public path:', __dirname);
-
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
 
   entry: {
     app: [
       'eventsource-polyfill',
-      'webpack-hot-middleware/client',
+      'webpack-hot-middleware/client?reload=true',
       'webpack/hot/only-dev-server',
       'react-hot-loader/patch',
       './client/index.js',
@@ -25,8 +23,7 @@ module.exports = {
   output: {
     path: __dirname,
     filename: 'app.js',
-    publicPath: '/'
-    //publicPath: '/'
+    publicPath: 'http://0.0.0.0:3000/build/',
   },
 
   resolve: {
@@ -76,6 +73,10 @@ module.exports = {
     }),
   ],
 
+  devServer: {
+    hot: true
+  },
+
   postcss: () => [
     postcssFocus(),
     cssnext({
@@ -84,5 +85,5 @@ module.exports = {
     postcssReporter({
       clearMessages: true,
     }),
-  ]
+  ],
 };

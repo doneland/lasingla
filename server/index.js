@@ -31,8 +31,9 @@ const app = Express();
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
   app.use(webpackDevMiddleware(compiler, {
+    hot: true,
     publicPath: config.output.publicPath,
-    noInfo: true
+    noInfo: false
   }));
   app.use(webpackHotMiddleware(compiler));
 }
@@ -78,8 +79,8 @@ const renderFullPage = (html, initialState) => {
           window.webpackManifest = ${JSON.stringify(chunkManifest)};
           //]]>` : ''}
         </script>
-        <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['/vendor.js'] : '/vendor.js'}'></script>
-        <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['/app.js'] : '/app.js'}'></script>
+        <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['vendor.js'] : '/build/vendor.js'}'></script>
+        <script src='${process.env.NODE_ENV === 'production' ? assetsManifest['app.js'] : '/build/app.js'}'></script>
       </body>
     </html>
   `;

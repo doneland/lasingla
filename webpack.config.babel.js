@@ -35,5 +35,5 @@ module.exports = {
     postcssReporter({
       clearMessages: true,
     }),
-  ]
+  ],
 };
