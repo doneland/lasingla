@@ -9,8 +9,8 @@ module.exports = {
   entry: {
     app: [
       'eventsource-polyfill',
-      'webpack-hot-middleware/client?reload=true',
-      'webpack/hot/only-dev-server',
+      'webpack-hot-middleware/client',
+      //'webpack/hot/only-dev-server',
       'react-hot-loader/patch',
       './client/index.js',
     ],
@@ -23,7 +23,7 @@ module.exports = {
   output: {
     path: __dirname,
     filename: 'app.js',
-    publicPath: 'http://0.0.0.0:3000/build/',
+    publicPath: '/build/',
   },
 
   resolve: {
@@ -59,6 +59,7 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',

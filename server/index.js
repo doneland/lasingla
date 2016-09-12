@@ -31,9 +31,9 @@ const app = Express();
 if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(config);
   app.use(webpackDevMiddleware(compiler, {
-    hot: true,
     publicPath: config.output.publicPath,
-    noInfo: false
+    noInfo: true,
+    reload: true
   }));
   app.use(webpackHotMiddleware(compiler));
 }
