@@ -29,19 +29,10 @@ match({
     console.log('Match error:', error);
   }
 
-  /*render(
-    <Provider store={store}>
-      <Router history={browserHistory} {...renderProps}>
-        {routes}
-      </Router>
-    </Provider>,
-    mountApp
-  );*/
+  console.log('Loading router match.');
 
   render(
-    <AppContainer>
-      <Root store={store} renderProps={renderProps} />
-    </AppContainer>,
+    <Root store={store} renderProps={renderProps} />,
     mountApp
   );
 
@@ -53,9 +44,7 @@ match({
       // use <App /> here rather than require() a <NextApp />.
       const NextRoot = require('./Root').default; // eslint-disable-line global-require
       render(
-        <AppContainer>
-          <NextRoot store={store} renderProps={renderProps} />
-        </AppContainer>,
+        <NextRoot store={store} renderProps={renderProps} />,
         mountApp
       );
     });

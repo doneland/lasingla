@@ -3,6 +3,7 @@ import compression from 'compression';
 import bodyParser from 'body-parser';
 import path from 'path';
 import cors from 'cors';
+import chokidar from 'chokidar';
 
 // Dependencies required by React
 import {Provider} from 'react-redux';
@@ -36,6 +37,31 @@ if (process.env.NODE_ENV === 'development') {
     reload: true
   }));
   app.use(webpackHotMiddleware(compiler));
+
+
+  // Do "hot-reloading" of express stuff on the server
+  // Throw away cached modules and re-require next time
+  // Ensure there's no important state in there!
+  const watcher = chokidar.watch('../');
+
+  watcher.on('ready', function() {
+    watcher.on('all', function() {
+      console.log("Clearing /server/ module cache from server");
+      Object.keys(require.cache).forEach(function(id) {
+        if (/[\/\\]server[\/\\]/.test(id)) delete require.cache[id];
+      });
+    });
+  });
+
+  // Do "hot-reloading" of react stuff on the server
+  // Throw away the cached client modules and let them be re-required next time
+  compiler.plugin('done', function() {
+    console.log("Clearing /client/ module cache from server");
+    Object.keys(require.cache).forEach(function(id) {
+      if (/[\/\\]client[\/\\]/.test(id)) delete require.cache[id];
+    });
+  });
+
 }
 
 
@@ -133,7 +159,6 @@ app.use((req, res, next) => {
       })
   });
 });
-
 
 // Start server.
 // TODO: Create configuration file and provide info from it.

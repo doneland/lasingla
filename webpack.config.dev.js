@@ -10,7 +10,7 @@ module.exports = {
     app: [
       'eventsource-polyfill',
       'webpack-hot-middleware/client',
-      //'webpack/hot/only-dev-server',
+      'webpack/hot/dev-server',
       'react-hot-loader/patch',
       './client/index.js',
     ],
@@ -59,7 +59,7 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
