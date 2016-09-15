@@ -1,3 +1,4 @@
+
 var cssnext = require('postcss-cssnext');
 var postcssFocus = require('postcss-focus');
 var postcssReporter = require('postcss-reporter');
@@ -25,6 +26,14 @@ module.exports = {
         test: /\.jpe?g$|\.gif$|\.png$|\.svg$/i,
         loader: 'url-loader?limit=10000',
       },
+      {
+        test: /\.(woff|woff2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "url-loader?limit=10000&minetype=application/font-woff"
+      },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "file-loader"
+      }
     ],
   },
   postcss: () => [

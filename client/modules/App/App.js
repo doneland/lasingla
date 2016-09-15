@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 // Import Style
+import bs from '../../bootstrap/css/bootstrap.css';
 import styles from './App.css';
 
 // Import Components
@@ -23,7 +24,7 @@ export class App extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className={bs.container}>
         {this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && <DevTools />}
         <div>
         <Helmet

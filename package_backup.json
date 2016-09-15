@@ -4,7 +4,8 @@
   "description": "Boilerplate Unversal React Application",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js"
+    "start": "cross-env BABEL_DISABLE_CACHE=1 NODE_ENV=development nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -58,23 +59,19 @@
     "redux-devtools-log-monitor": "^1.0.11",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.2",
+    "webpack": "v2.1.0-beta.22",
     "webpack-dev-middleware": "^1.6.1",
-    "webpack-dev-server": "^1.15.1",
+    "webpack-dev-server": "^2.1.0-beta.4",
     "webpack-externals-plugin": "^1.0.0",
     "webpack-hot-middleware": "^2.12.2"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
-    "bootstrap": "^3.3.7",
-    "classnames": "^2.2.5",
     "compression": "^1.6.2",
     "cors": "^2.8.0",
     "cross-env": "^2.0.1",
     "express": "^4.14.0",
-    "font-awesome-webpack": "0.0.4",
     "isomorphic-fetch": "^2.2.1",
-    "jquery": "^3.1.0",
     "react": "^15.3.1",
     "react-dom": "^15.3.1",
     "react-helmet": "^3.1.0",

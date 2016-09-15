@@ -4,14 +4,13 @@ var postcssFocus = require('postcss-focus');
 var postcssReporter = require('postcss-reporter');
 
 module.exports = {
-  devtool: 'cheap-module-eval-source-map',
+  //devtool: 'cheap-module-eval-source-map',
 
   entry: {
     app: [
       'eventsource-polyfill',
       'webpack-hot-middleware/client',
       'webpack/hot/dev-server',
-      'react-hot-loader/patch',
       './client/index.js',
     ],
     vendor: [
@@ -55,6 +54,14 @@ module.exports = {
         test: /\.json$/,
         loader: 'json-loader',
       },
+      {
+        test: /\.(woff|woff2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "url-loader?limit=10000&minetype=application/font-woff"
+      },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: "file-loader"
+      }
     ],
   },
 
@@ -86,5 +93,5 @@ module.exports = {
     postcssReporter({
       clearMessages: true,
     }),
-  ],
+  ]
 };

@@ -29,8 +29,6 @@ match({
     console.log('Match error:', error);
   }
 
-  console.log('Loading router match.');
-
   render(
     <Root store={store} renderProps={renderProps} />,
     mountApp
